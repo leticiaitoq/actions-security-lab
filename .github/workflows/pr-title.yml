@@ -4,12 +4,19 @@ on:
   pull_request:
     types: [opened, edited]
 
+permissions: {}
+
 jobs:
   check-title:
     runs-on: ubuntu-latest
     steps:
       - name: Exibir título e branch
+        # Valores não confiáveis passam por variáveis de ambiente
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+          BRANCH: ${{ github.head_ref }}
         run: |
-          echo "Título do PR: ${{ github.event.pull_request.title }}"
-          echo "Corpo do PR: ${{ github.event.pull_request.body }}"
-          echo "Branch: ${{ github.head_ref }}"
+          echo "Título do PR: $PR_TITLE"
+          echo "Corpo do PR: $PR_BODY"
+          echo "Branch: $BRANCH"
