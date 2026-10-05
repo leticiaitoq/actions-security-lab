@@ -17,3 +17,6 @@ Aplicação Node.js simples (`app.js` + testes) cujos **workflows do GitHub Acti
 
 > Os `<SHA-COMPLETO>` dos arquivos corrigidos são marcadores: o workflow só roda depois de você trocá-los.
 > O token em `ci.yml` é falso. Nunca coloque segredos reais no repositório ou em prints.
+
+## Teste de segurança GitHub Actions
+Laboratório de teste controlado.
