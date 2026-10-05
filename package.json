@@ -1,0 +1,10 @@
+{
+  "name": "actions-security-lab",
+  "version": "1.0.0",
+  "description": "Aplicação simples com workflows do GitHub Actions propositalmente inseguros (uso educacional)",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "node --test"
+  }
+}

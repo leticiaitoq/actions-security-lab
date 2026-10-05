@@ -1,0 +1,21 @@
+name: Testar PR
+
+# Trocado de pull_request_target para pull_request:
+# o código do PR roda sem acesso a secrets nem a permissões de escrita.
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+permissions:
+  contents: read
+
+jobs:
+  test-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@<SHA-COMPLETO>  # v4
+        with:
+          persist-credentials: false
+
+      - name: Executar testes do PR
+        run: npm test

@@ -1,0 +1,15 @@
+name: Verificar título do PR
+
+on:
+  pull_request:
+    types: [opened, edited]
+
+jobs:
+  check-title:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Exibir título e branch
+        run: |
+          echo "Título do PR: ${{ github.event.pull_request.title }}"
+          echo "Corpo do PR: ${{ github.event.pull_request.body }}"
+          echo "Branch: ${{ github.head_ref }}"

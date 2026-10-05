@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+
+permissions: write-all
+
+env:
+  # Token escrito diretamente no arquivo (valor FALSO, apenas para o exercício)
+  DEPLOY_TOKEN: ghp_EXEMPLO_FALSO_NAO_E_UM_TOKEN_REAL_123456
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Rodar testes
+        run: npm test
+
+      - name: Mostrar token no log
+        run: echo "Usando token ${{ env.DEPLOY_TOKEN }}"
+
+      - name: Criar release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0.${{ github.run_number }}

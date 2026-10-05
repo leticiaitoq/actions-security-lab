@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+
+# Permissões mínimas (somente leitura)
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Substitua <SHA-COMPLETO> pelo commit de 40 caracteres da versão desejada
+      - uses: actions/checkout@<SHA-COMPLETO>  # v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@<SHA-COMPLETO>  # v4
+        with:
+          node-version: 20
+
+      - name: Rodar testes
+        run: npm test
+
+  release:
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    # Escrita liberada somente neste job, que realmente precisa dela
+    permissions:
+      contents: write
+    steps:
+      - uses: softprops/action-gh-release@<SHA-COMPLETO>  # v2
+        with:
+          tag_name: v1.0.${{ github.run_number }}
+        # Segredos vêm de Settings > Secrets, nunca escritos no YAML
+        env:
+          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}

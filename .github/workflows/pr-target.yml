@@ -1,0 +1,23 @@
+name: Testar PR com privilégios
+
+on:
+  pull_request_target:
+    types: [opened, synchronize]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  test-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código do PR (não confiável)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Executar testes do PR
+        run: npm test
+        env:
+          API_SECRET: ${{ secrets.API_SECRET }}
